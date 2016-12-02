@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <tittle>Register page </tittle>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    <p style='color:red'>{{errorMessage}}</p>
+    <h1>Register</h1>
+    <p>Llene los campos para registrar nuevo usuario</p>
+    <br/>
+    <form action="{% url 'login:validate' %}" method="post">
+      {% csrf_token %}
+      <label>user</label> : <input type="text" name="userName" id="userName" />
+      <label>password</label> : <input type="password" name="password" id="password"/>
+      <input type="submit" value="log in"/>
+    </form>    
+  </body>
+</html>
