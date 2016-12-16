@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 
 def index(request):
-    context = {}
+    context = {}               
     return render(request, 'login/index.html', context)
 def validate(request):
     username = request.POST['userName']
