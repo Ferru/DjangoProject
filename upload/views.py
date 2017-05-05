@@ -1,20 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from .forms import UploadFileForm
+from .forms import UploadForm
+from .models import Document
 
 # Create your views here.
-# Imaginary function to handle an uploaded file.
-def handle_uploaded_file(f):
-    with open('some/file/name.txt', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-            
+
 def upload_file(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            handle_uploaded_file(request.FILES['file'])
-            return HttpResponseRedirect('/success/url/')
+        form = UploadForm(request.POST, request.FILES)
+        if(form.is_valid()):
+            newdoc = Document(filename = request.POST['filename'], docfile = request.FILES['docfile'])
+            newdoc.save(form)
+            return redirect("upload:uploadFile")
     else:
-        form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form})
+        form = UploadForm()
+    return render(request, 'upload/upload.html', {'form':form})
+            
+                                

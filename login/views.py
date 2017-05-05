@@ -4,7 +4,10 @@ from django.http import HttpResponse
 
 def index(request):
     context = {}               
-    return render(request, 'login/index.html', context)
+    if request.user.is_authenticated:
+        return render(request, 'login/success.html', context)
+    else:
+        return render(request, 'login/index.html', context)
 def validate(request):
     username = request.POST['userName']
     password = request.POST['password']
